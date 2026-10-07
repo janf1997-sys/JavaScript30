@@ -8,6 +8,18 @@
   <body>
     <div class="clock">
       <div class="clock-face">
+        <div class="number" style="--i: 1"><span>1</span></div>
+        <div class="number" style="--i: 2"><span>2</span></div>
+        <div class="number" style="--i: 3"><span>3</span></div>
+        <div class="number" style="--i: 4"><span>4</span></div>
+        <div class="number" style="--i: 5"><span>5</span></div>
+        <div class="number" style="--i: 6"><span>6</span></div>
+        <div class="number" style="--i: 7"><span>7</span></div>
+        <div class="number" style="--i: 8"><span>8</span></div>
+        <div class="number" style="--i: 9"><span>9</span></div>
+        <div class="number" style="--i: 10"><span>10</span></div>
+        <div class="number" style="--i: 11"><span>11</span></div>
+        <div class="number" style="--i: 12"><span>12</span></div>
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
@@ -67,6 +79,24 @@
         transition: all 0.05s;
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
+
+      .number {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        color: #fff;
+        z-index: -1;
+        transform: rotate(calc(var(--i) * 30deg));
+      }
+
+      .number span {
+        display: inline-block;
+        padding-top: 10px;
+        transform: rotate(calc(var(--i) * -30deg));
+      }
     </style>
 
     <script>
@@ -93,6 +123,8 @@
         hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
       }
       setInterval(setDate, 1000);
+
+      setDate();
     </script>
   </body>
 </html>
