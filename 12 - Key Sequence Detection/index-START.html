@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,6 +7,25 @@
     <link rel="icon" href="https://fav.farm/🔥" />
   </head>
   <body>
-    <script></script>
+    <script>
+      // Buffer array to store recent keystrokes
+      const pressed = [];
+      const secretCode = 'abongo';
+      window.addEventListener('keyup', e => {
+        pressed.push(e.key);
+        pressed.splice(
+          // Limit array size to the exact length of secretCode
+          // Start index counts backwards from the end (-secretCode.length - 1)
+          // Delete count removes the excess characters from the front
+
+          -secretCode.length - 1,
+          pressed.length - secretCode.length,
+        );
+        // Join keys into a single string and check for full secretCode match
+        if (pressed.join('').includes(secretCode)) {
+          cornify_add();
+        }
+      });
+    </script>
   </body>
 </html>
