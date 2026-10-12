@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>👀👀👀Follow Along Nav</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <title>👀👀👀Follow Along Nav</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
     <nav>
       <ul class="menu">
         <li><a href="">Home</a></li>
@@ -19,16 +18,65 @@
     </nav>
 
     <div class="wrapper">
-      <p>Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit. Est <a href="">explicabo</a> unde natus necessitatibus esse obcaecati distinctio, aut itaque, qui vitae!</p>
-      <p>Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque praesentium laborum pariatur earum <a href="">quaerat</a> cupiditate consequuntur facilis ullam dignissimos, aperiam quam veniam.</p>
-      <p>Cum ipsam quod, incidunt sit ex <a href="">tempore</a> placeat maxime <a href="">corrupti</a> possimus <a href="">veritatis</a> ipsum fugit recusandae est doloremque? Hic, <a href="">quibusdam</a>, nulla.</p>
-      <p>Esse quibusdam, ad, ducimus cupiditate <a href="">nulla</a>, quae magni odit <a href="">totam</a> ut consequatur eveniet sunt quam provident sapiente dicta neque quod.</p>
-      <p>Aliquam <a href="">dicta</a> sequi culpa fugiat <a href="">consequuntur</a> pariatur optio ad minima, maxime <a href="">odio</a>, distinctio magni impedit tempore enim repellendus <a href="">repudiandae</a> quas!</p>
+      <p>
+        Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit.
+        Est <a href="">explicabo</a> unde natus necessitatibus esse obcaecati
+        distinctio, aut itaque, qui vitae!
+      </p>
+      <p>
+        Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque
+        praesentium laborum pariatur earum <a href="">quaerat</a> cupiditate
+        consequuntur facilis ullam dignissimos, aperiam quam veniam.
+      </p>
+      <p>
+        Cum ipsam quod, incidunt sit ex <a href="">tempore</a> placeat maxime
+        <a href="">corrupti</a> possimus <a href="">veritatis</a> ipsum fugit
+        recusandae est doloremque? Hic, <a href="">quibusdam</a>, nulla.
+      </p>
+      <p>
+        Esse quibusdam, ad, ducimus cupiditate <a href="">nulla</a>, quae magni
+        odit <a href="">totam</a> ut consequatur eveniet sunt quam provident
+        sapiente dicta neque quod.
+      </p>
+      <p>
+        Aliquam <a href="">dicta</a> sequi culpa fugiat
+        <a href="">consequuntur</a> pariatur optio ad minima, maxime
+        <a href="">odio</a>, distinctio magni impedit tempore enim repellendus
+        <a href="">repudiandae</a> quas!
+      </p>
     </div>
 
-  <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
-  </script>
-</body>
-</html>
+    <script>
+      // Select all target links and dynamically inject a single highlight element
+      const triggers = document.querySelectorAll('a');
+      const highlight = document.createElement('span');
+      highlight.classList.add('highlight');
+      document.body.append(highlight);
 
+      function highlightLink() {
+        // getBoundClientRect() returns size and position relative to the visible viewport
+        const linkCoords = this.getBoundingClientRect();
+
+        // Adjust for page scroll offsets to calculate absolute position relative to the document
+        // Without window.scrollY/X, scrolling would misalign the highlight position
+        const coords = {
+          width: linkCoords.width,
+          height: linkCoords.height,
+          top: linkCoords.top + window.scrollY,
+          left: linkCoords.left + window.scrollX,
+        };
+
+        // Resize highlight pill to match target element dimensions exactly
+        highlight.style.width = `${coords.width}px`;
+        highlight.style.height = `${coords.height}px`;
+
+        // Reposition using CSS translate (GPU-accelerated, avoids expensive layout reflows)
+        highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`;
+      }
+
+      // Attach listener to trigger recalculation on hover
+      // mouseenter avoids unnecessary bubbling from inner text or child nodes
+      triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));
+    </script>
+  </body>
+</html>
