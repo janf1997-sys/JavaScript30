@@ -1,57 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Reference VS Copy</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <script>
+      // start with strings, numbers and booleans
+      // Each assignment creates an independet copy in memory
+      let age = 29;
+      let age2 = age;
+      console.log(age, age2); // 29, 29
+      age = 30;
+      console.log(age, age2); // 30, 29 (age2 remains unchanged)
+      // Let's say we have an array
+      const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
-  <script>
-    // start with strings, numbers and booleans
+      // and we want to make a copy of it.
+      const team = players;
 
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+      console.log(players, team);
+      // Copies the memory reference (pointer), not the array itself
+      // You might think we can just do something like this:
+      // team[3] = 'Lux'; Mutates players[3] as well!
+      // however what happens when we update that array?
 
-    // and we want to make a copy of it.
+      // now here is the problem!
 
-    // You might think we can just do something like this:
+      // oh no - we have edited the original array too!
 
-    // however what happens when we update that array?
+      // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
-    // now here is the problem!
+      // So, how do we fix this? We take a copy instead!
+      // .slice without an argument clones the array
+      const team2 = players.slice();
+      const team3 = [].concat(players);
+      // one way
 
-    // oh no - we have edited the original array too!
+      // or create a new array and concat the old one in
 
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+      // or use the new ES6 Spread
+      const team4 = [...players];
+      team4[3] = 'Lux';
 
-    // So, how do we fix this? We take a copy instead!
+      const team5 = Array.from(players);
+      // now when we update it, the original one isn't changed
 
-    // one way
+      // The same thing goes for objects, let's say we have a person object
 
-    // or create a new array and concat the old one in
+      // with Objects
+      const person = {
+        name: 'Wes Bos',
+        age: 80,
+      };
 
-    // or use the new ES6 Spread
+      // and think we make a copy:
+      //const captain = person;
+      //captain.age = 99;
 
-    // now when we update it, the original one isn't changed
+      // how do we take a copy instead?
+      // Object.assign(target, ...sources) merges properties into a new empty object
+      const cap2 = Object.assign({}, person, { number: 80, age: 99 });
+      // ES6 object spread
+      const cap3 = { ...person };
+      cap3.age = 12;
+      // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
-    // The same thing goes for objects, let's say we have a person object
+      const jan = {
+        name: 'Jan',
+        age: 29,
+        social: {
+          twitter: 'abongo',
+          twitch: 'abongo',
+        },
+      };
+      // Object.assign and object spread only copy 1 level deep.
+      // dev.social still points to the exact same reference as jan.social!
+      const dev = Object.assign({}, jan);
 
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
-
-    // and think we make a copy:
-
-    // how do we take a copy instead?
-
-    // We will hopefully soon see the object ...spread
-
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-
-  </script>
-
-</body>
+      //dev.social.twitter = '@abongo';
+      // Serializing to JSON and parsing back generates completely fresh memory objects.
+      const dev2 = JSON.parse(JSON.stringify(jan));
+      dev2.social.twitter = '@abongo'; //jan.social.twitter remains untouched
+    </script>
+  </body>
 </html>
