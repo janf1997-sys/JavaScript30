@@ -1,21 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Video Speed Scrubber</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
-
-  <div class="wrapper">
-    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
-    <div class="speed">
-      <div class="speed-bar">1×</div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Speed Scrubber</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <video
+        class="flex"
+        width="765"
+        height="430"
+        src="test.mp4"
+        loop
+        controls
+      ></video>
+      <div class="speed">
+        <div class="speed-bar">1×</div>
+      </div>
     </div>
-  </div>
 
-<script>
-</script>
-</body>
+    <script>
+      const speed = document.querySelector('.speed');
+      const bar = speed.querySelector('.speed-bar');
+      const video = document.querySelector('.flex');
+
+      speed.addEventListener('mousemove', function (e) {
+        // Calculate vertical mouse position relative to the speed container element
+        const y = e.pageY - this.offsetTop;
+        // Convert position to a decimal percentage based on total height
+        const percent = y / this.offsetHeight;
+        const min = 0.4;
+        const max = 4;
+        // Format percentage for visual height styling of the bar
+        const height = Math.round(percent * 100) + '%';
+        // Scale percentage linearly between min and max playback bounds
+        const playbackRate = percent * (max - min) + min;
+        // Apply styles and update video playback speed dynamically
+        bar.style.height = height;
+        bar.textContent = playbackRate.toFixed(2) + 'x';
+        video.playbackRate = playbackRate;
+      });
+    </script>
+  </body>
 </html>
