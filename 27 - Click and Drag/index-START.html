@@ -1,42 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Click and Drag</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
-  <div class="items">
-    <div class="item item1">01</div>
-    <div class="item item2">02</div>
-    <div class="item item3">03</div>
-    <div class="item item4">04</div>
-    <div class="item item5">05</div>
-    <div class="item item6">06</div>
-    <div class="item item7">07</div>
-    <div class="item item8">08</div>
-    <div class="item item9">09</div>
-    <div class="item item10">10</div>
-    <div class="item item11">11</div>
-    <div class="item item12">12</div>
-    <div class="item item13">13</div>
-    <div class="item item14">14</div>
-    <div class="item item15">15</div>
-    <div class="item item16">16</div>
-    <div class="item item17">17</div>
-    <div class="item item18">18</div>
-    <div class="item item19">19</div>
-    <div class="item item20">20</div>
-    <div class="item item21">21</div>
-    <div class="item item22">22</div>
-    <div class="item item23">23</div>
-    <div class="item item24">24</div>
-    <div class="item item25">25</div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Click and Drag</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div class="items">
+      <div class="item item1">01</div>
+      <div class="item item2">02</div>
+      <div class="item item3">03</div>
+      <div class="item item4">04</div>
+      <div class="item item5">05</div>
+      <div class="item item6">06</div>
+      <div class="item item7">07</div>
+      <div class="item item8">08</div>
+      <div class="item item9">09</div>
+      <div class="item item10">10</div>
+      <div class="item item11">11</div>
+      <div class="item item12">12</div>
+      <div class="item item13">13</div>
+      <div class="item item14">14</div>
+      <div class="item item15">15</div>
+      <div class="item item16">16</div>
+      <div class="item item17">17</div>
+      <div class="item item18">18</div>
+      <div class="item item19">19</div>
+      <div class="item item20">20</div>
+      <div class="item item21">21</div>
+      <div class="item item22">22</div>
+      <div class="item item23">23</div>
+      <div class="item item24">24</div>
+      <div class="item item25">25</div>
+    </div>
 
-<script>
-</script>
+    <script>
+      const slider = document.querySelector('.items');
+      // Flag to track whether mouse button is actively held down
+      let isDown = false;
+      // Cursor start position relative to the container on mousedown
+      let startX;
+      // Initial scroll position of the container before dragging starts
+      let scrollLeft;
 
+      slider.addEventListener('mousedown', e => {
+        isDown = true;
+        slider.classList.add('active');
+        // Calculate cursor position inside the slider (page coordinate minus container offset)
+        startX = e.pageX - slider.offsetLeft;
+        // Capture the existing scroll position at moment of click
+        scrollLeft = slider.scrollLeft;
+      });
+      slider.addEventListener('mouseleave', () => {
+        // Reset drag state if cursor leaves container boundary
+        isDown = false;
+        slider.classList.remove('active');
+      });
+      slider.addEventListener('mouseup', () => {
+        // Reset drag state when click is released
+        isDown = false;
+        slider.classList.remove('active');
+      });
+      slider.addEventListener('mousemove', e => {
+        // Guard clause: ignore hover events when mouse is not held down
+        if (!isDown) return;
+        // Prevent default browser behavior (text selection, image dragging etc)
+        e.preventDefault();
+        // Recalculate current cursor position inside container
+        const x = e.pageX - slider.offsetLeft;
+        // Determine distance moved from original click point (can be multiplied for faster dragging)
+        const walk = x - startX;
+        // Apply distance to scroll position
+        // Subtraction ensures dragging right scrolls content left (intuitive natural scroll)
+        slider.scrollLeft = scrollLeft - walk;
+      });
+    </script>
   </body>
 </html>
