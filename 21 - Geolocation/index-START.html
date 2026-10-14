@@ -101,13 +101,13 @@
       const arrow = document.querySelector('.arrow');
       const speed = document.querySelector('.speed-value');
 
-      /* =========================================================================
-   ORIGINAL TUTORIAL IMPLEMENTATION (Requires GPS / Mobile Device)
-   Listens for physical hardware updates via the Geolocation API.
-   ========================================================================= */
+      /*=========================================================================
+      ORIGINAL TUTORIAL IMPLEMENTATION (Requires GPS / Mobile Device)
+      Listens for physical hardware updates via the Geolocation API.
+      ========================================================================= */
       /*
-navigator.geolocation.watchPosition(
-  data => {
+    navigator.geolocation.watchPosition(
+      data => {
     // data.coords.speed is provided in km/h (or m/s depending on browser implementation)
     speed.textContent = Math.round(data.coords.speed);
     // data.coords.heading represents degrees clockwise relative to true north (0-360)
@@ -126,13 +126,13 @@ navigator.geolocation.watchPosition(
    are unavailable or restricted by desktop policy.
    ========================================================================= */
 
-      // Mock für Entwicklung ohne GPS / bei deaktivierten Admin-Rechten:
       let mockHeading = 0;
       let mockSpeed = 10;
 
       setInterval(() => {
-        // Simuliere einen konstanten Richtungswechsel und leichte Geschwindigkeitsänderung
+        // Rotate heading smoothly (0 to 359 degrees)
         mockHeading = (mockHeading + 2) % 360;
+        // Fluctuate simulated speed between 15 and 20 km/h
         mockSpeed = Math.floor(Math.random() * 5) + 15; // 15-20 km/h
 
         const mockData = {
