@@ -4,3 +4,11 @@ node_modules/
 haters/
 .idea/
 test.mp4
+dist/
+dist-ssr/
+*.tsbuildinfo
+.vscode/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
