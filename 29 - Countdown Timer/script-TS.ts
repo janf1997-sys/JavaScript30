@@ -47,7 +47,7 @@ buttons.forEach(button => button.addEventListener('click', startTimer));
 const form = document.querySelector<HTMLFormElement>('#custom')!;
 form.addEventListener('submit', function (e: SubmitEvent) {
   e.preventDefault();
-  const input = this.querySelector<HTMLInputElement>('input[name="minutes')!;
+  const input = this.querySelector<HTMLInputElement>('input[name="minutes"]')!;
   const mins = parseInt(input.value, 10);
   if (!isNaN(mins)) {
     timer(mins * 60);
