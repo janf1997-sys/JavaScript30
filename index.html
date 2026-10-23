@@ -4,18 +4,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
   <title>JavaScript30 – TypeScript & Vite</title>
   <link rel="icon" href="https://fav.farm/🔥" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
-      --tag-ts: #3178c6;
+      /* Material Design 3 Light Tokens */
+      --md-surface-light: #fef7ff;
+      --md-surface-container-light: #f3edf7;
+      --md-surface-container-high-light: #ece6f0;
+      --md-on-surface-light: #1d1b20;
+      --md-on-surface-variant-light: #49454f;
+      --md-primary-light: #0b57d0;
+      --md-on-primary-light: #ffffff;
+      --md-primary-container-light: #d3e3fd;
+      --md-on-primary-container-light: #041e49;
+      --md-secondary-container-light: #c2e7ff;
+      --md-on-secondary-container-light: #001d35;
+      --md-outline-variant-light: #c4c7c5;
+      --md-outline-light: #747775;
+
+      /* Material Design 3 Dark Tokens */
+      --md-surface-dark: #131314;
+      --md-surface-container-dark: #1e1f20;
+      --md-surface-container-high-dark: #282a2c;
+      --md-on-surface-dark: #e3e3e3;
+      --md-on-surface-variant-dark: #c4c7c5;
+      --md-primary-dark: #a8c7fa;
+      --md-on-primary-dark: #062e6f;
+      --md-primary-container-dark: #0842a0;
+      --md-on-primary-container-dark: #d3e3fd;
+      --md-secondary-container-dark: #004a77;
+      --md-on-secondary-container-dark: #c2e7ff;
+      --md-outline-variant-dark: #444746;
+      --md-outline-dark: #8e918f;
+
+      /* Default (Light) fallback */
+      --md-sys-color-surface: var(--md-surface-light);
+      --md-sys-color-surface-container: var(--md-surface-container-light);
+      --md-sys-color-surface-container-high: var(--md-surface-container-high-light);
+      --md-sys-color-on-surface: var(--md-on-surface-light);
+      --md-sys-color-on-surface-variant: var(--md-on-surface-variant-light);
+      --md-sys-color-primary: var(--md-primary-light);
+      --md-sys-color-on-primary: var(--md-on-primary-light);
+      --md-sys-color-primary-container: var(--md-primary-container-light);
+      --md-sys-color-on-primary-container: var(--md-on-primary-container-light);
+      --md-sys-color-secondary-container: var(--md-secondary-container-light);
+      --md-sys-color-on-secondary-container: var(--md-on-secondary-container-light);
+      --md-sys-color-outline-variant: var(--md-outline-variant-light);
+      --md-sys-color-outline: var(--md-outline-light);
+
+      /* Elevation Shadows */
+      --md-elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+      --md-elevation-2: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+      /* Brand Smoke Colors (JavaScript Yellow & TypeScript Blue) */
+      --brand-js: #f7df1e;
+      --brand-js-core: #fff078;
+      --brand-js-deep: #d97706;
+      --brand-ts: #3178c6;
+      --brand-ts-core: #7dd3fc;
+      --brand-ts-deep: #1d4ed8;
+      --smoke-opacity-light: 0.65;
+      --smoke-opacity-dark: 0.55;
+      --smoke-opacity: var(--smoke-opacity-light);
+
+      /* Motion Tokens (M3 Standard & Expressive Spring Easing) */
+      --md-motion-easing: cubic-bezier(0.2, 0, 0, 1);
+      --md-motion-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --md-motion-duration: 200ms;
+
+      /* Mandatory Fallback for browsers without light-dark() support */
+      @media (prefers-color-scheme: dark) {
+        --smoke-opacity: var(--smoke-opacity-dark);
+        --md-sys-color-surface: var(--md-surface-dark);
+        --md-sys-color-surface-container: var(--md-surface-container-dark);
+        --md-sys-color-surface-container-high: var(--md-surface-container-high-dark);
+        --md-sys-color-on-surface: var(--md-on-surface-dark);
+        --md-sys-color-on-surface-variant: var(--md-on-surface-variant-dark);
+        --md-sys-color-primary: var(--md-primary-dark);
+        --md-sys-color-on-primary: var(--md-on-primary-dark);
+        --md-sys-color-primary-container: var(--md-primary-container-dark);
+        --md-sys-color-on-primary-container: var(--md-on-primary-container-dark);
+        --md-sys-color-secondary-container: var(--md-secondary-container-dark);
+        --md-sys-color-on-secondary-container: var(--md-on-secondary-container-dark);
+        --md-sys-color-outline-variant: var(--md-outline-variant-dark);
+        --md-sys-color-outline: var(--md-outline-dark);
+      }
+
+      /* Modern light-dark() adaptive tokens */
+      @supports (color: light-dark(white, black)) {
+        --md-sys-color-surface: light-dark(var(--md-surface-light), var(--md-surface-dark));
+        --md-sys-color-surface-container: light-dark(var(--md-surface-container-light), var(--md-surface-container-dark));
+        --md-sys-color-surface-container-high: light-dark(var(--md-surface-container-high-light), var(--md-surface-container-high-dark));
+        --md-sys-color-on-surface: light-dark(var(--md-on-surface-light), var(--md-on-surface-dark));
+        --md-sys-color-on-surface-variant: light-dark(var(--md-on-surface-variant-light), var(--md-on-surface-variant-dark));
+        --md-sys-color-primary: light-dark(var(--md-primary-light), var(--md-primary-dark));
+        --md-sys-color-on-primary: light-dark(var(--md-on-primary-light), var(--md-on-primary-dark));
+        --md-sys-color-primary-container: light-dark(var(--md-primary-container-light), var(--md-primary-container-dark));
+        --md-sys-color-on-primary-container: light-dark(var(--md-on-primary-container-light), var(--md-on-primary-container-dark));
+        --md-sys-color-secondary-container: light-dark(var(--md-secondary-container-light), var(--md-secondary-container-dark));
+        --md-sys-color-on-secondary-container: light-dark(var(--md-on-secondary-container-light), var(--md-on-secondary-container-dark));
+        --md-sys-color-outline-variant: light-dark(var(--md-outline-variant-light), var(--md-outline-variant-dark));
+        --md-sys-color-outline: light-dark(var(--md-outline-light), var(--md-outline-dark));
+      }
+
+      color-scheme: light dark;
+      accent-color: var(--md-sys-color-primary);
     }
 
     * {
@@ -25,119 +123,415 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding: 2rem 1rem;
+      font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      padding: 3rem 1.5rem 4rem;
       min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+      isolation: isolate;
+    }
+
+    /* Realistic Volumetric Smoke Effect (SVG fractalNoise + Displaced Wisps) */
+    .smoke-svg-defs {
+      position: absolute;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .bg-smoke {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+      opacity: var(--smoke-opacity);
+    }
+
+    .smoke-corner {
+      position: absolute;
+      width: min(90vw, 980px);
+      height: min(90vw, 980px);
+      filter: url(#realistic-smoke);
+    }
+
+    .smoke-corner.js-smoke {
+      top: -28%;
+      left: -24%;
+    }
+
+    .smoke-corner.ts-smoke {
+      bottom: -28%;
+      right: -24%;
+    }
+
+    .smoke-plume {
+      position: absolute;
+      inset: 0;
+      border-radius: 40% 60% 65% 35% / 45% 55% 45% 55%;
+      will-change: transform;
+    }
+
+    /* JavaScript Smoke Plumes (Top-Left Corner) */
+    .js-smoke .plume-1 {
+      background:
+        radial-gradient(ellipse 65% 40% at 32% 32%, var(--brand-js-core) 0%, var(--brand-js) 35%, rgba(245, 158, 11, 0.35) 62%, transparent 80%),
+        conic-gradient(from 110deg at 38% 38%, transparent 0deg, rgba(247, 223, 30, 0.65) 55deg, transparent 140deg, rgba(217, 119, 6, 0.5) 230deg, transparent 360deg);
+      animation: billow-js-1 26s ease-in-out infinite alternate;
+    }
+
+    .js-smoke .plume-2 {
+      inset: 8%;
+      background:
+        radial-gradient(ellipse 45% 70% at 48% 42%, var(--brand-js) 0%, rgba(217, 119, 6, 0.55) 48%, transparent 76%),
+        radial-gradient(ellipse 55% 35% at 62% 28%, rgba(254, 240, 138, 0.6) 0%, transparent 70%);
+      animation: billow-js-2 19s ease-in-out infinite alternate-reverse;
+    }
+
+    .js-smoke .plume-3 {
+      inset: 14%;
+      background:
+        conic-gradient(from 25deg at 45% 45%, transparent 0deg, rgba(247, 223, 30, 0.55) 85deg, transparent 190deg, rgba(251, 191, 36, 0.45) 280deg, transparent 360%),
+        radial-gradient(ellipse 75% 30% at 55% 58%, var(--brand-js-deep) 0%, transparent 72%);
+      animation: billow-js-3 32s linear infinite;
+    }
+
+    /* TypeScript Smoke Plumes (Bottom-Right Corner) */
+    .ts-smoke .plume-1 {
+      background:
+        radial-gradient(ellipse 65% 42% at 68% 68%, var(--brand-ts-core) 0%, var(--brand-ts) 38%, rgba(29, 78, 216, 0.4) 64%, transparent 82%),
+        conic-gradient(from 290deg at 62% 62%, transparent 0deg, rgba(49, 120, 198, 0.7) 65deg, transparent 155deg, rgba(56, 189, 248, 0.55) 245deg, transparent 360deg);
+      animation: billow-ts-1 28s ease-in-out infinite alternate;
+    }
+
+    .ts-smoke .plume-2 {
+      inset: 8%;
+      background:
+        radial-gradient(ellipse 42% 72% at 52% 58%, var(--brand-ts) 0%, rgba(30, 64, 175, 0.6) 48%, transparent 76%),
+        radial-gradient(ellipse 58% 35% at 38% 72%, rgba(125, 211, 252, 0.6) 0%, transparent 70%);
+      animation: billow-ts-2 21s ease-in-out infinite alternate-reverse;
+    }
+
+    .ts-smoke .plume-3 {
+      inset: 14%;
+      background:
+        conic-gradient(from 200deg at 55% 55%, transparent 0deg, rgba(49, 120, 198, 0.6) 90deg, transparent 200deg, rgba(14, 165, 233, 0.5) 290deg, transparent 360%),
+        radial-gradient(ellipse 75% 32% at 45% 42%, var(--brand-ts-deep) 0%, transparent 72%);
+      animation: billow-ts-3 36s linear infinite reverse;
+    }
+
+    @keyframes billow-js-1 {
+      0% {
+        transform: translate3d(0%, 0%, 0) scale(1, 1) rotate(0deg) skew(0deg, 0deg);
+      }
+
+      50% {
+        transform: translate3d(10%, 8%, 0) scale(1.18, 0.92) rotate(14deg) skew(6deg, -4deg);
+      }
+
+      100% {
+        transform: translate3d(18%, 14%, 0) scale(1.08, 1.22) rotate(28deg) skew(-5deg, 8deg);
+      }
+    }
+
+    @keyframes billow-js-2 {
+      0% {
+        transform: translate3d(0%, 0%, 0) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(14%, 4%, 0) scale(0.9, 1.25) rotate(-18deg);
+      }
+
+      100% {
+        transform: translate3d(6%, 16%, 0) scale(1.22, 0.95) rotate(12deg);
+      }
+    }
+
+    @keyframes billow-js-3 {
+      0% {
+        transform: rotate(0deg) scale(1.05, 0.95);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(0.92, 1.15);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1.05, 0.95);
+      }
+    }
+
+    @keyframes billow-ts-1 {
+      0% {
+        transform: translate3d(0%, 0%, 0) scale(1, 1) rotate(0deg) skew(0deg, 0deg);
+      }
+
+      50% {
+        transform: translate3d(-10%, -8%, 0) scale(1.2, 0.9) rotate(-16deg) skew(-6deg, 4deg);
+      }
+
+      100% {
+        transform: translate3d(-18%, -14%, 0) scale(1.06, 1.24) rotate(-30deg) skew(5deg, -8deg);
+      }
+    }
+
+    @keyframes billow-ts-2 {
+      0% {
+        transform: translate3d(0%, 0%, 0) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(-14%, -5%, 0) scale(0.92, 1.26) rotate(20deg);
+      }
+
+      100% {
+        transform: translate3d(-6%, -16%, 0) scale(1.24, 0.94) rotate(-14deg);
+      }
+    }
+
+    @keyframes billow-ts-3 {
+      0% {
+        transform: rotate(0deg) scale(0.95, 1.08);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.16, 0.9);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(0.95, 1.08);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .smoke-plume {
+        animation: none !important;
+      }
     }
 
     header {
-      max-width: 1100px;
-      margin: 0 auto 2.5rem;
+      max-width: 1160px;
+      margin: 0 auto 3rem;
       text-align: center;
+      padding: 2.5rem 1.5rem;
+      background-color: color-mix(in oklab, var(--md-sys-color-surface-container) 82%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
+      border: 1px solid var(--md-sys-color-outline-variant);
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.015em;
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      color: var(--md-sys-color-on-surface);
     }
 
     p.subtitle {
-      color: var(--text-muted);
-      font-size: 1.1rem;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 1.125rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
     .grid {
-      max-width: 1100px;
+      max-width: 1160px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.25rem;
     }
 
+    /* Material 3 Elevated / Filled Card */
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
+      background-color: color-mix(in oklab, var(--md-sys-color-surface-container) 84%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 16px;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      box-shadow: var(--md-elevation-1);
+      transition:
+        background-color var(--md-motion-duration) var(--md-motion-easing),
+        box-shadow var(--md-motion-duration) var(--md-motion-easing),
+        transform var(--md-motion-duration) var(--md-motion-easing),
+        border-color var(--md-motion-duration) var(--md-motion-easing);
     }
 
     .card:hover {
+      background-color: color-mix(in oklab, var(--md-sys-color-surface-container-high) 90%, transparent);
+      box-shadow: var(--md-elevation-2);
       transform: translateY(-2px);
-      border-color: var(--accent);
+      border-color: var(--md-sys-color-outline);
     }
 
     .card-header {
       display: flex;
-      align-items: baseline;
+      align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 0.75rem;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
     .card-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text-main);
+      font-size: 1.125rem;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      color: var(--md-sys-color-on-surface);
     }
 
+    /* Material 3 Assist / Status Chip */
     .badge-ts {
-      background-color: var(--tag-ts);
-      color: #fff;
+      background-color: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
       font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.2rem 0.5rem;
-      border-radius: 9999px;
+      font-weight: 500;
+      letter-spacing: 0.025em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .card-links {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 0.5rem;
-      margin-top: 1rem;
+      margin-top: auto;
+      width: 100%;
     }
 
+    /* Material 3 Expressive Button Group with Squish Effect */
     .card-links a {
+      position: relative;
+      flex: 1 1 0%;
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
-      color: var(--text-main);
-      background: #0f172a;
-      border: 1px solid var(--card-border);
-      padding: 0.4rem 0.75rem;
-      border-radius: 0.375rem;
-      font-size: 0.85rem;
+      color: var(--md-sys-color-primary);
+      background-color: transparent;
+      border: 1px solid var(--md-sys-color-outline);
+      padding: 0.55rem 0.85rem;
+      border-radius: 24px;
+      font-size: 0.875rem;
       font-weight: 500;
-      transition: all 0.15s ease;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition:
+        flex-grow 350ms var(--md-motion-spring),
+        border-radius 350ms var(--md-motion-spring),
+        transform 350ms var(--md-motion-spring),
+        padding 350ms var(--md-motion-spring),
+        background-color var(--md-motion-duration) var(--md-motion-easing),
+        border-color var(--md-motion-duration) var(--md-motion-easing),
+        box-shadow var(--md-motion-duration) var(--md-motion-easing);
     }
 
+    /* Squish siblings when any button in the group is hovered/focused */
+    .card-links:has(a:hover, a:focus-visible) a:not(:hover):not(:focus-visible) {
+      flex-grow: 0.65;
+      border-radius: 28px;
+      transform: scaleY(0.95);
+      padding-inline: 0.55rem;
+    }
+
+    /* Expand and reduce border-radius on the hovered/focused button */
+    .card-links a:hover,
+    .card-links a:focus-visible {
+      flex-grow: 1.85;
+      border-radius: 10px;
+      background-color: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent);
+      border-color: var(--md-sys-color-primary);
+    }
+
+    .card-links a:active {
+      border-radius: 8px;
+      transform: scale(0.98);
+    }
+
+    .card-links a:focus-visible {
+      outline: 2px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Material 3 Filled Button for featured TypeScript links */
     .card-links a.featured {
-      background: var(--accent);
-      color: #0f172a;
-      border-color: var(--accent);
-      font-weight: 600;
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border-color: transparent;
+      font-weight: 500;
     }
 
-    .card-links a.featured:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-      color: #fff;
+    .card-links a.featured:hover,
+    .card-links a.featured:focus-visible {
+      background-color: color-mix(in oklab, var(--md-sys-color-primary) 88%, var(--md-sys-color-on-primary));
+      box-shadow: var(--md-elevation-1);
     }
 
-    .card-links a:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    /* Forced Colors Mode accessibility support */
+    @media (forced-colors: active) {
+      .bg-smoke {
+        display: none;
+      }
+
+      .card {
+        border: 1px solid CanvasText;
+      }
+
+      .card-links a {
+        border: 1px solid ButtonText;
+      }
+
+      .card-links a.featured {
+        border: 2px solid Highlight;
+      }
     }
   </style>
 </head>
 
 <body>
+  <svg class="smoke-svg-defs" aria-hidden="true">
+    <defs>
+      <filter id="realistic-smoke" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="5" seed="8" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="160" xChannelSelector="R" yChannelSelector="G"
+          result="displaced" />
+        <feGaussianBlur in="displaced" stdDeviation="14" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="bg-smoke" aria-hidden="true">
+    <div class="smoke-corner js-smoke">
+      <div class="smoke-plume plume-1"></div>
+      <div class="smoke-plume plume-2"></div>
+      <div class="smoke-plume plume-3"></div>
+    </div>
+    <div class="smoke-corner ts-smoke">
+      <div class="smoke-plume plume-1"></div>
+      <div class="smoke-plume plume-2"></div>
+      <div class="smoke-plume plume-3"></div>
+    </div>
+  </div>
   <header>
     <h1>JavaScript30 <span>🔥</span></h1>
     <p class="subtitle">Modernized with TypeScript & Vite Dev Server</p>
